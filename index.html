@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Election Results Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #f9f9f9; color: #333; }
+        h1 { color: #004080; }
+        .candidate { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Election Results</h1>
+    <div id="results"></div>
+
+    <script>
+        const candidates = {
+            "Alice": 320,
+            "Bob": 450,
+            "Charlie": 450
+        };
+
+        const totalVotes = Object.values(candidates).reduce((a, b) => a + b, 0);
+        const maxVotes = Math.max(...Object.values(candidates));
+        const winners = Object.keys(candidates).filter(name => candidates[name] === maxVotes);
+
+        let resultsDiv = document.getElementById("results");
+        for (let [name, votes] of Object.entries(candidates)) {
+            let percent = ((votes / totalVotes) * 100).toFixed(2);
+            resultsDiv.innerHTML += `<div class='candidate'><strong>${name}</strong>: ${votes} AV (${percent}%)</div>`;
+        }
+
+        if (winners.length === 1) {
+            resultsDiv.innerHTML += `<h2>Winner: ${winners[0]}</h2>`;
+        } else {
+            resultsDiv.innerHTML += `<h2>Tie between: ${winners.join(", ")}</h2>`;
+        }
+    </script>
+</body>
+</html>
